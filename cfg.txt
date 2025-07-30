@@ -1,0 +1,6 @@
+  --task_name
+  --is_training 1 
+  --model_id ECL_512_96 
+  --model 
+  --data ECL   
+  --model_comment 
