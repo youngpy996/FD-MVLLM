@@ -60,8 +60,8 @@ if __name__ == '__main__':
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
     parser.add_argument('--output_csv', default="./output_windowed_data.csv", help='iamge2data output')
     parser.add_argument('--sampling_rate', type=int, default=50000, help='sampling_rate')
-    parser.add_argument('--overlap', type=int, default=200, help='滑动窗口重叠大小')
-    parser.add_argument('--window_size', type=int, default=600, help='滑动窗口大小')
+    parser.add_argument('--overlap', type=int, default=512, help='滑动窗口重叠大小')
+    parser.add_argument('--window_size', type=int, default=1024, help='滑动窗口大小')
     parser.add_argument('--csv_root', type=str, default=r'E:\young\JNU-Bearing-Dataset-main\input', help='csv路径')
     parser.add_argument('--image_root', type=str, default=r"E:\young\JNU-Bearing-Dataset-main\results600-200-200",
                         help='图片路径')
@@ -75,8 +75,8 @@ if __name__ == '__main__':
     parser.add_argument('--seasonal_patterns', type=str, default='Monthly', help='subset for M4')
 
     # model define
-    parser.add_argument('--enc_in', type=int, default=600, help='encoder input size csv')
-    parser.add_argument('--enc_out', type=int, default=600, help='encoder output size picture')
+    parser.add_argument('--enc_in', type=int, default=512, help='encoder input size csv')
+    parser.add_argument('--enc_out', type=int, default=512, help='encoder output size picture')
     parser.add_argument('--dec_in', type=int, default=7, help='decoder input size')
     parser.add_argument('--c_out', type=int, default=7, help='output size')
     parser.add_argument('--d_model', type=int, default=8, help='dimension of model')
