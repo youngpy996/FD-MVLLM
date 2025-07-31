@@ -56,12 +56,12 @@ def process_file(file_info):
 if __name__ == '__main__':
     # 配置参数
     config = {
-        'window_size': 25000,
-        'overlap': 200,
+        'window_size': 1024,
+        'overlap': 512,
         'sampling_frequency': 50000,
         'wavelet': 'cmor',
         'output_root': r'D:\KTH\online\JNU-Bearing-Dataset-main\JNU-Bearing-Dataset-main\output',
-        'input_dir': r'D:\KTH\online\JNU-Bearing-Dataset-main\JNU-Bearing-Dataset-main/ib600_2'
+        'input_dir': r'D:\KTH\online\JNU-Bearing-Dataset-main\JNU-Bearing-Dataset-main/ib'
     }
 
     # 创建任务列表
