@@ -353,15 +353,7 @@ class Model(nn.Module):
         self.word_embeddings = self.llm_model.get_input_embeddings().weight
         self.vocab_size = self.word_embeddings.shape[0]
         self.num_tokens = 1000
-        self.attention_dim = 1000
-
         self.mapping_layer = nn.Linear(self.vocab_size, self.num_tokens)
-        self.reprogramming_layer = ReprogrammingLayer(
-            d_model=configs.d_model,
-            d_attention=self.attention_dim,
-            d_llm=configs.llm_dim,
-            n_heads=8
-        )
         # 第3步
         # self.reprogramming_layer = ReprogrammingLayer(configs.llm_dim, configs.n_heads)
         self.reprogramming_layer = ReprogrammingLayer(128, 8, d_llm=configs.llm_dim)
@@ -636,58 +628,50 @@ class MultiHeadAttentionReprogramming(nn.Module):
 # print(output.shape)  # Should be (batch_size, target_len, embed_dim)
 
 class ReprogrammingLayer(nn.Module):
-    def __init__(self, d_model, d_attention, d_llm, n_heads, attention_dropout=0.1):
+    def __init__(self, d_model, n_heads, d_keys=None, d_llm=None, attention_dropout=0.1):
         super(ReprogrammingLayer, self).__init__()
 
+        # d_keys默认为d_model // n_heads
+        d_keys = d_keys or (d_model // n_heads)
+
+        # 将目标、源和值嵌入分别投影到指定的维度
+        self.query_projection = nn.Linear(d_model, d_keys * n_heads)
+        self.key_projection = nn.Linear(d_llm, d_keys * n_heads)
+        self.value_projection = nn.Linear(d_llm, d_keys * n_heads)
+        self.out_projection = nn.Linear(d_keys * n_heads, d_llm)
         self.n_heads = n_heads
-        self.d_attention = d_attention
-        self.head_dim = d_attention // n_heads
-        assert self.head_dim * n_heads == self.d_attention, "d_attention must be divisible by n_heads"
-
-        # Projection layers to map inputs into the common attention space (d_attention)
-        self.query_projection = nn.Linear(d_model, self.d_attention)
-        self.key_projection = nn.Linear(d_llm, self.d_attention)
-        self.value_projection = nn.Linear(d_llm, self.d_attention)
-
-        # Final projection layer to map the attention output back to the LLM's dimension
-        self.out_projection = nn.Linear(self.d_attention, d_llm)
-
         self.dropout = nn.Dropout(attention_dropout)
-        self.scale = self.head_dim ** -0.5
 
     def forward(self, target_embedding, source_embedding, value_embedding):
-        # target_embedding (from time-series/image):
-        # source_embedding (from LLM vocab):
-        # value_embedding (from LLM vocab):
+        B, L, _ = target_embedding.shape  # 目标数据的batch size和长度
+        S, _ = source_embedding.shape  # 源数据的长度
+        H = self.n_heads  # 头数
 
-        B, L, _ = target_embedding.shape
-        S, _ = source_embedding.shape
-        H = self.n_heads
+        # 将目标数据投影到查询、源数据投影到键和值数据投影到值
+        target_embedding = self.query_projection(target_embedding).view(B, L, H, -1)
+        source_embedding = self.key_projection(source_embedding).view(S, H, -1)
+        value_embedding = self.value_projection(value_embedding).view(S, H, -1)
 
-        # 1. Project Q, K, V into the attention space (d_attention)
-        # Query from target (time-series/image)
-        query = self.query_projection(target_embedding)  #
-        # Key and Value from source (learnable tokens)
-        key = self.key_projection(source_embedding)  #
-        value = self.value_projection(value_embedding)  #
+        # 进行重编程操作
+        out = self.reprogramming(target_embedding, source_embedding, value_embedding)
 
-        # 2. Reshape for Multi-Head Attention
-        query = query.view(B, L, H, self.head_dim)  #
-        key = key.view(S, H, self.head_dim)  #
-        value = value.view(S, H, self.head_dim)  #
+        # 重新整理输出的形状
+        out = out.reshape(B, L, -1)
 
-        # 3. Perform Scaled Dot-Product Attention in d_attention space
-        # einsum computes batched dot product: (B, L, H, E) x (S, H, E) -> (B, H, L, S)
-        scores = torch.einsum("blhe,she->bhls", query, key) * self.scale
+        return self.out_projection(out)
 
-        A = self.dropout(torch.softmax(scores, dim=-1))  # Attention weights
+    def reprogramming(self, target_embedding, source_embedding, value_embedding):
+        B, L, H, E = target_embedding.shape  # B：batch size，L：目标长度，H：头数，E：嵌入维度
 
-        # 4. Compute weighted sum of values
-        # (B, H, L, S) x (S, H, E) -> (B, L, H, E)
-        reprogrammed_embedding = torch.einsum("bhls,she->blhe", A, value)
+        scale = 1. / sqrt(E)
 
-        # 5. Concatenate heads and project back to d_llm
-        reprogrammed_embedding = reprogrammed_embedding.reshape(B, L, self.d_attention)
-        out = self.out_projection(reprogrammed_embedding)  #
+        # 计算目标和源嵌入之间的注意力分数
+        scores = torch.einsum("blhe,she->bhls", target_embedding, source_embedding)
 
-        return out
+        # 计算注意力权重A
+        A = self.dropout(torch.softmax(scale * scores, dim=-1))
+
+        # 计算重编程嵌入
+        reprogramming_embedding = torch.einsum("bhls,she->blhe", A, value_embedding)
+
+        return reprogramming_embedding
