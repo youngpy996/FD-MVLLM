@@ -8,7 +8,7 @@ FD-MVLLM: Fault Diagnosis Based on Multimodal Vibration Data and Large Language 
 
 Cite:
 
-[1] F. Xu, N. Ding, N. Li, L. Liu, N. Hou, N. Xu, W. Guo, L. Tian, H. Xu, C.-M. Lawrence Wu, X. Wu, X. Chen, A review of bearing failure Modes, mechanisms and causes, Engineering Failure Analysis, 152 (2023).
+[1] M. Jin, S. Wang, L. Ma, Z. Chu, J.Y. Zhang, X. Shi, P.-Y. Chen, Y. Liang, Y.-F. Li, S. Pan, Q.J.a.e.-p. Wen, Time-LLM: Time Series Forecasting by Reprogramming Large Language Models, 2023, pp. arXiv:2310.01728.https://doi.org/10.48550/arXiv.2310.01728.
 
 [2] Li D, Pang Z, Chen Y, et al. FD-MVLLM: Fault diagnosis based on multimodal vibration data and large language model for bearing system[J]. Mechanical Systems and Signal Processing, 2025, 239: 113226.
 
