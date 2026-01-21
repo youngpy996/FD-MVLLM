@@ -7,6 +7,7 @@ FD-MVLLM: Fault Diagnosis Based on Multimodal Vibration Data and Large Language 
 
 
 The latest concise version is available on Tag; please go there. This is also to differentiate it from the Time-LLM documentation.
+
 Cite:
 
 [1] M. Jin, S. Wang, L. Ma, Z. Chu, J.Y. Zhang, X. Shi, P.-Y. Chen, Y. Liang, Y.-F. Li, S. Pan, Q.J.a.e.-p. Wen, Time-LLM: Time Series Forecasting by Reprogramming Large Language Models, 2023, pp. arXiv:2310.01728.https://doi.org/10.48550/arXiv.2310.01728.
