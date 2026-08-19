@@ -34,6 +34,7 @@
 ### V1.3
 使用采样频率为12kHz，转速为1750的csv，即单工况。
 
+### V1.2为之前在Tag中的FD-MVLLM-simple版本
 
 ![Training curves](assets/training_curves.png)
 
