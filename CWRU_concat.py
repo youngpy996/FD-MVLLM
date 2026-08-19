@@ -3,10 +3,10 @@ import pandas as pd
 
 # ==================== 配置路径 ====================
 # 1. 你的主文件夹路径（包含多个子文件夹）
-root_dir = Path(r"D:\KTH\online\CWRU_Bearing_NumPy-main\CWRU_Data\data\O")
+root_dir = Path(r"\CWRU_Data\data\O")
 
 # 2. 合并后输出的文件路径
-output_file = Path(r"D:\KTH\online\CWRU_Bearing_NumPy-main\CWRU_Data\data/O.csv")
+output_file = Path(r"\CWRU_Data\data/O.csv")
 # ==================================================
 
 # 递归查找主文件夹及所有子文件夹下的 .csv 文件
