@@ -35,12 +35,13 @@
 | 最终验证Macro-F1 | **0.9947** |
 | 总训练时间 | 6.60小时 |
 
+![Training curves](assets/training_curves.png)
+
 ### V1.3
 使用采样频率为12kHz，转速为1750的csv，即单工况。
 
 ### V1.2为之前在Tag中的FD-MVLLM-simple版本
 
-![Training curves](assets/training_curves.png)
 
 主要实验参数：
 
