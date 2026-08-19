@@ -19,7 +19,7 @@ def process_window(args):
     """处理单个窗口的核心函数"""
     idx, window, window_size, output_dir, sf, wavelet = args
     # 计算尺度参数
-    min_freq, max_freq = 1, 512
+    min_freq, max_freq = 1, 5000
     cf = pywt.central_frequency(wavelet)
     scales = cf / (np.array([max_freq, min_freq]) * (1 / sf))
     scales = np.linspace(scales[0], scales[1], 128)
@@ -58,10 +58,10 @@ if __name__ == '__main__':
     config = {
         'window_size': 1024,
         'overlap': 512,
-        'sampling_frequency': 12000,
+        'sampling_frequency': 10000,
         'wavelet': 'cmor',
-        'output_root': r'your/CWRU/cwt_images/path/',
-        'input_dir': r'your/CWRU/csv/path/'
+        'output_root': r'E:\dayoung\JNU-data\img1_1024_128-3',
+        'input_dir': r'E:\dayoung\JNU-data\input1-10'
     }
 
     # 创建任务列表
