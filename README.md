@@ -202,7 +202,7 @@ python scripts/plot_training_history.py \
 8. 
 
 
-The latest concise version is available under FD-MVLLM-1.4. This also distinguishes it from the Time-LLM documentation.
+The latest concise version is available under FD-MVLLM-v1.4. This also distinguishes it from the Time-LLM documentation.
 
 Cite:
 
