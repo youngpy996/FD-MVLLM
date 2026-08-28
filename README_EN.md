@@ -202,7 +202,7 @@ python scripts/plot_training_history.py \
 6. Model accuracy is strongly affected by CWT image quality, the number of model layers, the loss function, and related settings. CWT image quality is particularly important.
 7. FD-MVLLM is a fault-diagnosis model intended for datasets such as JNU, CWRU, and PU. Its applicability to bearing remaining useful life (RUL) datasets has yet to be validated.
 
-The latest concise version is available under FD-MVLLM-1.4. This also distinguishes it from the Time-LLM documentation.
+The latest concise version is available under FD-MVLLM-v1.4. This also distinguishes it from the Time-LLM documentation.
 
 ## Citation
 
