@@ -69,12 +69,9 @@ Main experimental parameters:
 ├── README.md                         # Chinese documentation
 ├── README_EN.md                      # English documentation
 ├── requirements.txt
-├── run_main.py                       # Original/baseline training entry point
-├── run_main_accuracy.py              # Recommended accuracy-enhanced entry point
+├── run_main.py                       # Training entry point
 ├── run_main_accuracy_resilient.py    # Lazy loading, automatic recovery, and server training
-├── pic_gen_pool.py                   # Original CWT generation script
-├── pic_gen_pool_accuracy.py          # Recommended CWT generation script
-├── pic_gen_pool_cal.py               # Low-frequency-range CWT experiment script
+├── pic_gen_pool.py                   # CWT generation script
 ├── layers/
 │   └── StandardNorm.py
 ├── models/

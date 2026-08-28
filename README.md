@@ -66,12 +66,8 @@
 .
 ├── README.md
 ├── requirements.txt
-├── run_main.py                       # 原始/基线训练入口
-├── run_main_accuracy.py              # 推荐的精度增强入口
-├── run_main_accuracy_resilient.py    # 懒加载、自动恢复、服务器训练入口
-├── pic_gen_pool.py                   # 原始CWT生成脚本
-├── pic_gen_pool_accuracy.py          # 推荐的CWT生成脚本
-├── pic_gen_pool_cal.py               # 低频范围CWT实验脚本
+├── run_main.py                       # 训练入口
+├── pic_gen_pool.py                   # CWT生成脚本
 ├── layers/
 │   └── StandardNorm.py
 ├── models/
